@@ -2548,7 +2548,6 @@ resource "aws_wafv2_web_acl" "main" {
               content {
                 fallback_behavior = lookup(forwarded_ip_config.value, "fallback_behavior")
                 header_name       = lookup(forwarded_ip_config.value, "header_name")
-                position          = lookup(forwarded_ip_config.value, "position")
               }
             }
 
