@@ -2539,15 +2539,16 @@ resource "aws_wafv2_web_acl" "main" {
         dynamic "rate_based_statement" {
           for_each = length(lookup(rule.value, "rate_based_statement", {})) == 0 ? [] : [lookup(rule.value, "rate_based_statement", {})]
           content {
-            limit              = lookup(rate_based_statement.value, "limit")
+            limit                 = lookup(rate_based_statement.value, "limit")
             evaluation_window_sec = lookup(rate_based_statement.value, "evaluation_window_sec", "300")
-            aggregate_key_type = lookup(rate_based_statement.value, "aggregate_key_type", "IP")
+            aggregate_key_type    = lookup(rate_based_statement.value, "aggregate_key_type", "IP")
 
             dynamic "forwarded_ip_config" {
               for_each = length(lookup(rate_based_statement.value, "forwarded_ip_config", {})) == 0 ? [] : [lookup(rate_based_statement.value, "forwarded_ip_config", {})]
               content {
                 fallback_behavior = lookup(forwarded_ip_config.value, "fallback_behavior")
                 header_name       = lookup(forwarded_ip_config.value, "header_name")
+                position          = lookup(forwarded_ip_config.value, "position")
               }
             }
 
